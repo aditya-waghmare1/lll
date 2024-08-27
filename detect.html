@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generative AI Demo</title>
+  <style>
+    /* Add your CSS styles here */
+  </style>
+</head>
+<body>
+  <h1>Generative AI Demo</h1>
+  <input type="file" id="imageInput" accept="image/*">
+  <button onclick="generateOutput()">Generate Output</button>
+  <div id="output"></div>
+
+  <script>
+    async function generateOutput() {
+      const imageInput = document.getElementById('imageInput');
+      const outputDiv = document.getElementById('output');
+      const files = imageInput.files;
+
+      if (files.length === 0) {
+        outputDiv.textContent = 'Please select an image.';
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('image1', files[0]);
+      formData.append('image2', files[1]);
+
+      try {
+        const response = await fetch('/generate', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.text();
+        outputDiv.textContent = result;
+      } catch (error) {
+        outputDiv.textContent = 'Error: ' + error.message;
+      }
+    }
+  </script>
+</body>
+</html>
